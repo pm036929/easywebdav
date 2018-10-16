@@ -6,6 +6,21 @@ from collections import namedtuple
 
 py_majversion, py_minversion, py_revversion = platform.python_version_tuple()
 
+try:
+    unicode = unicode
+except NameError:
+    # 'unicode' is undefined, must be Python 3
+    str = str
+    unicode = str
+    bytes = bytes
+    basestring = (str,bytes)
+else:
+    # 'unicode' exists, must be Python 2
+    str = str
+    unicode = unicode
+    bytes = str
+    basestring = basestring
+    
 if py_majversion == '2':
     from httplib import responses as HTTP_CODES
     from urlparse import urlparse
